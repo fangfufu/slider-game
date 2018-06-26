@@ -19,7 +19,7 @@ if diff(size(i_state))
     error('solve_puzzle:invalid_input', ...
         'solve_puzzle: The input must be a square matrix');
 end
-disp('starting state:');
+disp('Starting state:');
 c_state = i_state;
 disp(i_state);
 
@@ -57,7 +57,10 @@ while ~isequal(c_state, f_state)
         else
             % increase the depth limit, restart the search
             d_limit = d_limit + 1;
-            disp(['increase search depth to: ', num2str(d_limit)]);
+            if d_limit > 13
+                toc;
+                disp(['increase search depth to: ', num2str(d_limit)]);
+            end
             move_history = [];
             state_history = i_state(:)';
             edge_history = 1;
@@ -80,7 +83,7 @@ while ~isequal(c_state, f_state)
             move_history(end+1) = pm; %#ok<AGROW>
         end
     catch me
-        if strcmp(me.identifier, 'next_state_L1:path_unavailable')
+        if strcmp(me.identifier, 'next_state:path_unavailable')
             % next_state function fail to produce the next state,
             %   set the choice_history to 5, force stack rewinding
             edge_history(end) = 5;
@@ -89,12 +92,15 @@ while ~isequal(c_state, f_state)
         end
     end
     iteration_counter = iteration_counter + 1;
+    if rem(iteration_counter, 100000) == 0
+        toc;
+        disp(['Iteration: ', num2str(iteration_counter)]);
+    end
 end
-disp(['iteration: ', num2str(iteration_counter)]);
+disp(['Iteration: ', num2str(iteration_counter)]);
 toc;
 move_history = move_to_solution(move_history);
-disp(move_history);
-state_history = state_history(2:end,:);
+disp(['Solution: ', move_history]);
 
 end
 
