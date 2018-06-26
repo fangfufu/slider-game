@@ -1,5 +1,5 @@
 # slider-game
-Sliding puzzle solver using iterative deepening best search, implemented in Matlab. 
+Sliding puzzle solver using iterative deepening best first search, implemented in Matlab. 
 
 This program solve this class of puzzle: https://en.wikipedia.org/wiki/15_puzzle, the puzzle size can be arbitarily large. 
 
