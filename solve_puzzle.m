@@ -1,7 +1,7 @@
-function [move_history, state_history] = solve_puzzle(c_state)
+function [move_history, state_history] = solve_puzzle(i_state, s_depth)
 %% SOLVE_PUZZLE Solve a slide puzzle
 %   Parameter:
-%       cs: The initial state
+%       c_state: The initial state
 %   Output:
 %       pl: The path list
 % Basic idea:
@@ -15,12 +15,12 @@ function [move_history, state_history] = solve_puzzle(c_state)
 %   and so on. 
 %       - next_state_seq
 %
-if diff(size(c_state))
+if diff(size(i_state))
     error('solve_puzzle:invalid_input', ...
         'solve_puzzle: The input must be a square matrix');
 end
 disp('starting state:');
-i_state = c_state;
+c_state = i_state;
 disp(i_state);
 
 % Generate a final state
@@ -30,9 +30,14 @@ f_state = gen_puzzle(g_size, 0, 'silent');
 move_history = [];
 state_history = i_state(:)'; 
 edge_history = 1;
-d_limit = 1;
+if ~exist('s_depth', 'var')
+    d_limit = 1;
+else
+    d_limit = s_depth;
+end
 
 iteration_counter = 0;
+tic;
 while ~isequal(c_state, f_state)
     % If we have exhausted the current node,
     %  rewind the stack by 1, and run this test again
@@ -70,9 +75,9 @@ while ~isequal(c_state, f_state)
         else
             % The proposed state is new, record it
             c_state = p_state;
-            state_history(end+1, :) = c_state(:)';
-            edge_history(end+1) = 1;
-            move_history(end+1) = pm;
+            state_history(end+1, :) = c_state(:)'; %#ok<AGROW>
+            edge_history(end+1) = 1; %#ok<AGROW>
+            move_history(end+1) = pm; %#ok<AGROW>
         end
     catch me
         if strcmp(me.identifier, 'next_state_L1:path_unavailable')
@@ -86,6 +91,7 @@ while ~isequal(c_state, f_state)
     iteration_counter = iteration_counter + 1;
 end
 disp(['iteration: ', num2str(iteration_counter)]);
+toc;
 move_history = move_to_solution(move_history);
 disp(move_history);
 state_history = state_history(2:end,:);
@@ -99,3 +105,4 @@ s(s == '2') = 'D';
 s(s == '3') = 'L';
 s(s == '4') = 'R';
 end
+

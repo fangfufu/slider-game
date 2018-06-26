@@ -7,8 +7,34 @@ function [ns, nm] = next_state(cs, fs, pc)
 %       pc: which of the next configuration to pick
 %   Output: 
 %       ns: the next configuration
+%       nm: the next move
 
-[nd, ndi] = next_distance(cs, fs);
+am = avail_move(cs);
+nd = zeros(size(am));
+[zi, zj] = find(cs == 0);
+
+for i = 1:numel(am)
+    ni = zi;
+    nj = zj;
+    if am(i)
+        switch i
+            case 1
+                ni = ni - 1;
+            case 2
+                ni = ni + 1;
+            case 3
+                nj = nj - 1;
+            case 4
+                nj = nj + 1;
+        end
+        [fi, fj] = find(fs == cs(ni, nj));
+        nd(i) = abs(fi-zi) + abs(fj-zj);
+    else
+        nd(i) = nan;
+    end
+end
+
+[nd, ndi] = sort(nd);
 
 % Check if the chosen path is valid
 if isnan(nd(pc))
@@ -19,4 +45,3 @@ nm = ndi(pc);
 ns = move(cs, nm);
 
 end
-
