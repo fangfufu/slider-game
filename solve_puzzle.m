@@ -1,20 +1,11 @@
 function [move_history, state_history] = solve_puzzle(i_state, s_depth)
-%% SOLVE_PUZZLE Solve a slide puzzle
+%% SOLVE_PUZZLE Solve a slide puzzle using iterative deepening A* search
 %   Parameter:
-%       c_state: The initial state
+%       i_state: The initial state of the puzzle, must be a square matrix
+%       s_depth: The initial search depth of the puzzle
 %   Output:
 %       pl: The path list
-% Basic idea:
-% - Depth first search
-% - While not successful, shuffle states.
-%
-% Two approaches
-% - Move the most / least out of place piece first, based on L1 distance
-%       - next_state_L1
-% - Program the thing to solve the first piece first, then the second piece
-%   and so on. 
-%       - next_state_seq
-%
+
 if diff(size(i_state))
     error('solve_puzzle:invalid_input', ...
         'solve_puzzle: The input must be a square matrix');
@@ -31,7 +22,7 @@ move_history = [];
 state_history = i_state(:)'; 
 edge_history = 1;
 if ~exist('s_depth', 'var')
-    d_limit = 1;
+    d_limit = 13;
 else
     d_limit = s_depth;
 end

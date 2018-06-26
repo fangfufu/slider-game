@@ -5,10 +5,11 @@ You might want to ask, why is this implemented in Matlab? This is because I have
 
 This program solve this class of puzzle: https://en.wikipedia.org/wiki/15_puzzle, the puzzle size can be arbitarily large. 
 
+Minimal recommended resolution: 1024x768
+
+- To launch the GUI, run ``slide_game_gui``, click the number adjacent to the blank button to move the blank button around.
 - To generate a puzzle, run ``gen_puzzle``. 
 - To solve a puzzle, run ``solve_puzzle``. 
-- To launch the GUI, run ``slide_game_gui``, click the number adjacent to the blank button to move the blank button around.
-Note that these are functions. 
 
 
 ## License

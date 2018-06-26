@@ -2,8 +2,10 @@ function [out, solution, state_history] = gen_puzzle(gsize,m, silent)
 %GEN_PUZZLE Generate a puzzle
 %   Parameters:
 %       gsize: size of the puzzle
-%       m: the number of moves to make, or the the move to make
-%       silent: suppress the solution output
+%       m: the number of moves to make, or a vector containing the moves 
+%           to make
+%       silent: if this variable exists, the solution output to the prompt 
+%           is suppressed
 
 out = reshape([1:(gsize^2-1), 0], gsize, gsize)';
 

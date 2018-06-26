@@ -1,7 +1,8 @@
 function [btnNum] = gen_puzzle_static(v)
-%GEN_PUZZLE Generate a 4x4 puzzle
+%GEN_PUZZLE Deterministically generate a 4x4 puzzle
 switch v
     case 0
+        gsize = 4;
         btnNum = 1:gsize*gsize-1;
         btnNum(end+1) = 0;
         btnNum = reshape(btnNum, gsize, gsize)';
