@@ -1,8 +1,6 @@
 # slider-game
 Sliding puzzle solver using iterative deepening A* search, implemented in Matlab. 
 
-You might want to ask, why is this implemented in Matlab? This is because I have no shame, and I believe shame is a social construct. 
-
 This program solve this class of puzzle: https://en.wikipedia.org/wiki/15_puzzle, the puzzle size can be arbitarily large. 
 
 Minimal recommended resolution: 1024x768
